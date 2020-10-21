@@ -1,23 +1,21 @@
 <template>
-  <div id="app">
-    <Header/>
-    <router-view/>
-  </div>
+	<div id="app">
+		<Header/>
+		<router-view/>
+	</div>
 </template>
 
 <script>
 
-import Header from "./components/Header";
+import Header from './components/Header';
 export default {
-  name: 'App',
-  components: {
-    Header
-  }
-}
+	name: 'App',
+	components: {
+		Header
+	}
+};
 </script>
 
 <style>
-  @import 'styles/style.less';
-#app {
-}
+	@import 'styles/style.less';
 </style>
