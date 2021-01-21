@@ -1,35 +1,32 @@
 <template>
-	<div class="popupWindow">
-		<button @click="closeThePopup">x</button>
-		<label for="username">Введите логин</label>
-		<input type="text" id="username" v-model="username">
-		<label for="password">Введите пароль</label>
-		<input type="password" id="password" v-model="password">
-		<input type="submit" @click="checkTheFields">
+	<div class='popupWindow'>
+		<button @click='closeThePopup'>x</button>
+		<label for='username'>Введите логин</label>
+		<input type='text' id="username" v-model='username'>
+		<label for='password'>Введите пароль</label>
+		<input type='password' id='password' v-model='password'>
+		<input type='submit' @click='onAuthorization'>
 	</div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
 	name: 'PopupWindow',
 	methods: {
 		closeThePopup() {
 			this.$emit('close-popup');
 		},
-		checkTheFields() {
-			let isItValidUser = this.username === 'Victoria' && this.password === '2425' || this.username === 'Admin' && this.password === 'Password';
-			if(isItValidUser) {
-				let userType = 'user';
-				if(this.username === 'Admin') {
-					userType = 'Admin';
-				}
-				let username = this.username;
-				this.$store.dispatch('setUserAction', {userType, username});
-				this.$emit('authorization');
-				this.$emit('close-popup');
+    onAuthorization() {
+		  let path = 'http://localhost:5000/authorization'
+      axios.post(path, {
+        username: this.username,
+        password: this.password
+      }).then(response => {if(response.data === 'successful') {this.$emit('close-popup')}}).catch()
+      this.$emit('authorization');
+      this.$emit('close-popup');
 			}
-		}
-	},
+		},
 	data: function() {
 		return {
 			password: '',
